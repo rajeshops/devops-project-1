@@ -12,7 +12,7 @@ pipeline {
                 sh 'trivy fs --exit-code 1 --severity HIGH,CRITICAL .'
             }
         }
-        stage('Build' & Sonar){
+        stage('Build & Sonar'){
             steps {
                 withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
                     sh 'mvn clean verify sonar:sonar \
