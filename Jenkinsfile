@@ -36,7 +36,13 @@ pipeline {
             }
         }
         stage('Trivy Image Scan') {
+            environment {
+                TRIVY_CACHE_DIR = '/var/lib/jenkins/trivy-cache'
+                TMPDIR = '/var/lib/jenkins/tmp'
+            }
             steps {
+                sh 'mkdir -p $TRIVY_CACHE_DIR
+            mkdir -p $TMPDIR'
                 sh 'trivy image --exit-code 1 --severity HIGH,CRITICAL "$IMAGE_REPO:$BUILD_NUMBER"'
             }
         }
